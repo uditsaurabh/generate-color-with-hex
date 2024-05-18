@@ -1,9 +1,8 @@
-package generate-color-with-hex
+package color
 
 import (
 	"math/rand"
 	"time"
-	"fmt"
 )
 
 func fillColors(colorMap *map[int][]string) {
@@ -63,6 +62,6 @@ func GenerateRandomColor() []string {
 	rand.Seed(time.Now().UnixNano())
 	colorMap := make(map[int][]string)
 	fillColors(&colorMap)
-	op:=colorMap[rand.Intn(50)]
+	op := colorMap[rand.Intn(50)]
 	return op
 }
