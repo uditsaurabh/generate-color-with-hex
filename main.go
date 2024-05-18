@@ -1,4 +1,4 @@
-package main
+package generate-color-with-hex
 
 import (
 	"math/rand"
@@ -64,6 +64,5 @@ func GenerateRandomColor() []string {
 	colorMap := make(map[int][]string)
 	fillColors(&colorMap)
 	op:=colorMap[rand.Intn(50)]
-	fmt.Println("the color is ",op)
 	return op
 }
