@@ -1,7 +1,9 @@
 package color
 
+
 import (
 	"math/rand"
+	"sync"
 	"time"
 )
 
@@ -58,10 +60,31 @@ func fillColors(colorMap *map[int][]string) {
 	color[49] = []string{"SlateGray", "#708090"}
 }
 
-func GenerateRandomColor() []string {
+var wg sync.WaitGroup
+var mu sync.Mutex
+
+func GenerateRandomColor(numberOfColors int) [][]string {
+	if numberOfColors == 0 {
+		numberOfColors = 1
+	}
+	var colorGrid [][]string
 	rand.Seed(time.Now().UnixNano())
 	colorMap := make(map[int][]string)
 	fillColors(&colorMap)
-	op := colorMap[rand.Intn(50)]
-	return op
+	wg.Add(numberOfColors)
+	for i := 0; i < numberOfColors; i++ {
+		go returnRandomColor(&colorMap, &colorGrid)
+	}
+	wg.Wait()
+	return colorGrid
+
+}
+func returnRandomColor(colorMap *map[int][]string, colorGrid *[][]string) {
+	defer wg.Done()
+	mu.Lock()
+	color := *colorMap
+	colorProp := color[rand.Intn(50)]
+	*colorGrid = append(*colorGrid, colorProp)
+	mu.Unlock()
+
 }
