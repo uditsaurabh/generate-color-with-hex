@@ -64,6 +64,9 @@ var wg sync.WaitGroup
 var mu sync.Mutex
 
 func GenerateRandomColor(numberOfColors int) [][]string {
+	//go:doc Example - GenerateRandomColor return the number of colors you want with their hex code
+	//go:param - numberOfColors int - number of colors you want
+	//go:return - [][]string - returns the color grid
 	if numberOfColors == 0 {
 		numberOfColors = 1
 	}
